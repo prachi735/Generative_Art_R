@@ -1,0 +1,28 @@
+---
+title: "Smiley"
+output: html_notebook
+---
+```{r}
+#install.packages('ggplot2')
+#install.packages('tidyverse')
+
+library(ggplot2)
+library(dplyr)
+
+smile <- expand.grid(x = 1:8, y=1:8) %>% 
+  filter(!(x %in% c(1, max(x)) & y %in% c(1,max(y)))) %>% 
+  filter(!(x %in% c(1, max(x)-1) & y %in% c(1,max(y)))) %>% 
+  filter(!(x %in% c(1, max(x)) & y %in% c(1,max(y)-1))) %>% 
+  filter(!(x %in% c(2, max(x)) & y %in% c(1,max(y)))) %>% 
+  filter(!(x %in% c(1, max(x)) & y %in% c(2,max(y))))
+
+eyes <- data.frame(x = c(3,6), y = c(6,6))
+
+mouth <- data.frame(x = c(3,4,5,6), y = c(3,2,2,3) )
+
+ggplot() +
+  geom_tile(data = smile, aes(x = x, y = y), fill="Yellow", width=2, height=2) +
+  geom_tile(data = eyes, aes(x = x, y = y), fill="Black", width=1, height=1) +
+  geom_tile(data = mouth, aes(x = x, y = y), fill="Black", width=1, height=1) 
+
+```
